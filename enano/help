@@ -1,0 +1,52 @@
+NAME
+    enano - Enhanced Nano Launcher
+
+SYNOPSIS
+    enano [OPTIONS] [sudo] [FILE]...
+
+DESCRIPTION
+    enano is a wrapper for the nano text editor that opens files in a new 
+    gnome-terminal instance. It safely handles privilege escalation (sudo) 
+    and supports opening multiple files simultaneously, preserving your 
+    current terminal session.
+
+    If no window-sizing options are passed, enano will read the default 
+    behavior from the configuration file located at /etc/enano/settings.conf.
+
+OPTIONS
+    -f, --full-screen
+        Opens the new gnome-terminal in full-screen mode.
+
+    -m, --maximize
+        Opens the new gnome-terminal in a maximized window.
+
+    -n, --normal
+        Opens the new gnome-terminal using the default window size.
+
+    -h, --help
+        Displays this help text and exits.
+
+SPECIAL KEYWORDS
+    sudo
+        If 'sudo' is included before the file names, enano will prompt 
+        for your password in the new terminal window and open the files 
+        with root privileges.
+
+EXAMPLES
+    enano test.txt
+        Opens test.txt in a new window using the default view from settings.conf.
+
+    enano -f sudo /etc/hosts /etc/fstab
+        Opens both /etc/hosts and /etc/fstab in a new, full-screen terminal 
+        with root privileges.
+
+    enano -m file1.js file2.js file3.js
+        Opens three JavaScript files in a maximized terminal window.
+
+FILES
+    /etc/enano/settings.conf
+        Configuration file. Use DEFAULT_VIEW to set base behavior 
+        (e.g., DEFAULT_VIEW=-f).
+        
+    /etc/enano/help
+        This documentation file.

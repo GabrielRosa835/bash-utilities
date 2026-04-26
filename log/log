@@ -1,0 +1,36 @@
+#!/bin/bash
+source colors
+LEVEL="TRC"
+COLOR="$fgWhite"
+case "$1" in
+   -f) 
+      LEVEL="FTL"
+      COLOR="${fgbRed}"
+      shift;;
+   -e) 
+      LEVEL="ERR"
+      COLOR="$fgRed"
+      shift;;
+   -w)
+      LEVEL="WRN"
+      COLOR="$fgYellow"
+      shift;;
+   -i) 
+      LEVEL="INF"
+      COLOR="$fgCyan"
+      shift;;
+   -d) 
+      LEVEL="DBG"
+      COLOR="$reset"
+      shift;;
+   -t) 
+      LEVEL="TRC"
+      COLOR="$fgWhite"
+      shift;;
+esac
+if [ "$1" != "" ]; then
+   text="$1"
+else
+   read text
+fi
+printf "[$(date "+%Y-%m-%d %H:%M:%S") ${COLOR}${LEVEL}${reset}] $text \n"

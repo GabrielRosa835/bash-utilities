@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Initializing variables to build the command for 'window'
+WINDOW_ARGS=""
+USE_SUDO=""
+
+# Loading the configuration file if it exists
+if [[ -f ./settings.conf ]]; then
+   source ./settings.conf
+   # Passing the default view flag directly to window (e.g., -f, -m, -n)
+   WINDOW_ARGS="$DEFAULT_VIEW"
+fi
+
+# Parsing command-line arguments dynamically
+while [[ "$#" -gt 0 ]]; do
+   case "$1" in
+      -f|-m|-n)
+         WINDOW_ARGS="$1"
+         shift ;;
+      sudo)
+         USE_SUDO="sudo"
+         shift ;;
+     -h|--help)
+         # Failsafe in case the help file is missing
+         if [[ -f ./help ]]; then
+            cat ./help
+         else
+            echo "Help file missing. Usage: enano [-f|-m|-n] [sudo] [files...]"
+         fi
+         exit 0 ;;
+      *)
+         # Remaining arguments are assumed to be files
+         break ;;
+   esac
+done
+
+# Executing 'window', injecting 'nano' into the correct position
+# The structure expected by window is: window [OPTIONS] [sudo] COMMAND [FILES...]
+window $WINDOW_ARGS $USE_SUDO nano "$@"

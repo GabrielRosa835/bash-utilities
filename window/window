@@ -1,0 +1,43 @@
+#!/bin/bash
+
+VIEW=""
+USE_SUDO=false
+
+# Loading the configuration file if it exists
+if [[ -f ./settings.conf ]]; then
+   source ./settings.conf
+   # Translating the config value into the actual gnome-terminal argument
+   case "$DEFAULT_VIEW" in
+      -f) VIEW="--full-screen" ;;
+      -m) VIEW="--maximize" ;;
+      -n) VIEW="" ;;
+   esac
+fi
+
+# Parsing command-line arguments dynamically
+while [[ $# -gt 0 ]]; do
+   case "$1" in
+      -f) VIEW="--full-screen"; shift ;;
+      -m) VIEW="--maximize"; shift ;;
+      -n) VIEW=""; shift ;;
+      sudo) USE_SUDO=true; shift ;;
+      -h|--help)
+         # Failsafe in case the help file is missing
+         if [ -f ./help ]; then
+            cat ./help
+         else
+            echo "Help file missing. Usage: window [-f|-m|-n] [sudo] [commands...]"
+         fi
+         exit 0 ;;
+      *)
+         # If it's not a known flag, we assume its part of the remaining arguments 
+         break ;;
+    esac
+done
+
+# Executing with or without sudo, passing all remaining arguments
+if [ "$USE_SUDO" == "true" ]; then
+    gnome-terminal $VIEW -- sudo $@
+else
+    gnome-terminal $VIEW -- $@
+fi

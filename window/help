@@ -1,0 +1,58 @@
+NAME
+    window - Generalized Terminal Session Launcher
+
+SYNOPSIS
+    window [OPTIONS] [sudo] COMMAND [ARGS]...
+
+DESCRIPTION
+    window is a wrapper utility that executes any given command or program 
+    in a newly spawned gnome-terminal instance. It safely handles privilege 
+    escalation (sudo) and allows you to detach long-running processes or 
+    editors from your current terminal session.
+
+    If no window-sizing options are passed, window will read the default 
+    behavior from the configuration file located at /etc/window/settings.conf.
+
+OPTIONS
+    -f, --full-screen
+        Opens the new gnome-terminal in full-screen mode.
+
+    -m, --maximize
+        Opens the new gnome-terminal in a maximized window.
+
+    -n, --normal
+        Opens the new gnome-terminal using the default window size.
+
+    -h, --help
+        Displays this help text and exits.
+
+SPECIAL KEYWORDS
+    sudo
+        If 'sudo' is included before the command, window will prompt 
+        for your password in the new terminal window and execute the 
+        subsequent command with root privileges.
+
+EXAMPLES
+    window htop
+        Opens the htop system monitor in a new window using the default 
+        view from settings.conf.
+
+    window -m dotnet run
+        Spawns a maximized terminal window and executes a C# .NET 
+        application, keeping your main terminal free for other tasks.
+
+    window -f sudo nano /etc/hosts /etc/fstab
+        Opens both /etc/hosts and /etc/fstab using nano in a new, 
+        full-screen terminal with root privileges.
+
+    window npm start
+        Starts a React development server in a detached, standard-sized 
+        terminal window.
+
+FILES
+    /etc/window/settings.conf
+        Configuration file. Use DEFAULT_VIEW to set base behavior 
+        (e.g., DEFAULT_VIEW=-f).
+        
+    /etc/window/help
+        This documentation file.
