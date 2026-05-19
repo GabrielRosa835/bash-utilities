@@ -1,11 +1,13 @@
 #!/bin/bash
 
+conf="/etc/local/window"
+
 VIEW=""
 USE_SUDO=false
 
 # Loading the configuration file if it exists
-if [[ -f ./settings.conf ]]; then
-   source ./settings.conf
+if [[ -f "$conf/settings.conf" ]]; then
+   source "$conf/settings.conf"
    # Translating the config value into the actual gnome-terminal argument
    case "$DEFAULT_VIEW" in
       -f) VIEW="--full-screen" ;;
@@ -23,8 +25,8 @@ while [[ $# -gt 0 ]]; do
       sudo) USE_SUDO=true; shift ;;
       -h|--help)
          # Failsafe in case the help file is missing
-         if [ -f ./help ]; then
-            cat ./help
+         if [ -f "$conf/help" ]; then
+            cat "$conf/help"
          else
             echo "Help file missing. Usage: window [-f|-m|-n] [sudo] [commands...]"
          fi

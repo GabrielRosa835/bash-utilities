@@ -1,6 +1,11 @@
 # Bold: 1 (e.g., \e[1;31m for Bold Red).
 # Underline: 4 (e.g., \e[4;32m for Underlined Green).
 
+if [ -n "$1" ] && [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+   cat "/etc/local/colors/help"
+   exit 1
+fi
+
 reset="\e[0m"
 
 fgBlack="\e[0;30m"

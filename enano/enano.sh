@@ -1,13 +1,12 @@
 #!/bin/bash
 
-# Initializing variables to build the command for 'window'
+conf="/etc/local/enano"
+
 WINDOW_ARGS=""
 USE_SUDO=""
 
-# Loading the configuration file if it exists
-if [[ -f ./settings.conf ]]; then
-   source ./settings.conf
-   # Passing the default view flag directly to window (e.g., -f, -m, -n)
+if [[ -f "$conf/settings.conf" ]]; then
+   source "$conf/settings.conf"
    WINDOW_ARGS="$DEFAULT_VIEW"
 fi
 
@@ -22,8 +21,8 @@ while [[ "$#" -gt 0 ]]; do
          shift ;;
      -h|--help)
          # Failsafe in case the help file is missing
-         if [[ -f ./help ]]; then
-            cat ./help
+         if [[ -f "$conf/help" ]]; then
+            cat "$conf/help"
          else
             echo "Help file missing. Usage: enano [-f|-m|-n] [sudo] [files...]"
          fi
@@ -34,6 +33,4 @@ while [[ "$#" -gt 0 ]]; do
    esac
 done
 
-# Executing 'window', injecting 'nano' into the correct position
-# The structure expected by window is: window [OPTIONS] [sudo] COMMAND [FILES...]
 window $WINDOW_ARGS $USE_SUDO nano "$@"

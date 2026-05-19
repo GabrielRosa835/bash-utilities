@@ -1,0 +1,43 @@
+NAME
+    colors - ANSI color code variable definitions for bash scripts
+
+SYNOPSIS
+    source colors
+    . colors
+
+DESCRIPTION
+    The colors utility provides a collection of predefined environment variables containing ANSI escape sequences[cite: 1]. By sourcing this file into your bash scripts or current shell session, you can easily apply styling to your terminal output without needing to memorize raw escape codes.
+
+    Note: This file is not meant to be executed directly. It must be included in your environment or scripts using the `source` or `.` command.
+
+VARIABLE CONVENTIONS
+    The variables are predictably named using a combination of position, style, and color[cite: 1].
+
+    Positions:
+        fg  - Foreground text color[cite: 1].
+        bg  - Background color[cite: 1].
+
+    Styles:
+        (none) - Standard text[cite: 1].
+        b      - Bold text (e.g., \e[1;31m)[cite: 1].
+        u      - Underlined text (e.g., \e[4;32m)[cite: 1].
+
+    Colors:
+        Black, Red, Green, Yellow, Blue, Magenta, Cyan, White[cite: 1].
+
+SPECIAL VARIABLES
+    reset
+        Resets all text formatting back to the terminal's default state (\e[0m)[cite: 1]. Always append this to the end of your styled strings to prevent color bleeding into the next terminal line.
+
+EXAMPLES
+    source colors
+        Loads the color variables into your current shell or script so they can be referenced.
+
+    echo -e "${fgGreen}Operation completed successfully.${reset}"
+        Prints the message in standard green text, then resets the formatting[cite: 1]. Note that the `-e` flag is required for `echo` to interpret the escape sequences properly.
+
+    echo -e "${fgbRed}ERROR:${reset} File not found."
+        Prints "ERROR:" in bold red text, and the rest of the message in the terminal's default color[cite: 1].
+
+    echo -e "${bguYellow}WARNING${reset}"
+        Prints the word "WARNING" with an underlined yellow background[cite: 1].

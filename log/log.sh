@@ -3,11 +3,11 @@ source colors
 LEVEL="TRC"
 COLOR="$fgWhite"
 case "$1" in
-   -f) 
+   -f)
       LEVEL="FTL"
       COLOR="${fgbRed}"
       shift;;
-   -e) 
+   -e)
       LEVEL="ERR"
       COLOR="$fgRed"
       shift;;
@@ -15,15 +15,15 @@ case "$1" in
       LEVEL="WRN"
       COLOR="$fgYellow"
       shift;;
-   -i) 
+   -i)
       LEVEL="INF"
       COLOR="$fgCyan"
       shift;;
-   -d) 
+   -d)
       LEVEL="DBG"
       COLOR="$reset"
       shift;;
-   -t) 
+   -t)
       LEVEL="TRC"
       COLOR="$fgWhite"
       shift;;

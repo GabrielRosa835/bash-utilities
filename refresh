@@ -1,0 +1,42 @@
+#!/bin/bash
+
+if [ "$(whoami)" != "root" ]; then
+   echo "Not enough permission. Run with sudo"
+   exit 1
+fi
+
+fgBlue="\e[0;34m"
+reset="\e[0m"
+
+bin="/usr/local/bin"
+etc="/etc/local"
+
+list=$(ls | xargs)
+
+for element in ${list[@]}; do
+
+   folder="$(pwd)/$element"
+
+   if [ ! -d "$folder" ]; then
+      continue
+   fi
+   if [ ! -f "$folder/$element.sh" ]; then
+      continue
+   fi
+
+   echo -e "Updating ${fgBlue}${element}${reset}"
+   chmod +x "$folder/$element.sh"
+   cp "$folder/$element.sh" "$bin/$element"
+
+   misc=$(ls "$folder/" | grep -v ".*\.sh" | xargs)
+   if [ -z "${misc[@]}" ]; then
+      continue
+   fi
+   if [ ! -d "$etc/$element" ]; then
+      mkdir "$etc/$element"
+   fi
+   cd "$folder/"
+   cp ${misc[@]} "$etc/$element"
+   cd ".."
+
+done
