@@ -33,7 +33,7 @@ for element in ${list[@]}; do
       continue
    fi
    if [ ! -d "$etc/$element" ]; then
-      mkdir "$etc/$element"
+      mkdir -p "$etc/$element"
    fi
    cd "$folder/"
    cp ${misc[@]} "$etc/$element"
