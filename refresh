@@ -40,3 +40,12 @@ for element in ${list[@]}; do
    cd ".."
 
 done
+
+if [ -f "aliases" ]; then
+   aliases_end_path="$etc/aliases"
+   if [ -f "$aliases_end_path" ]; then
+      rm "$aliases_end_path"
+   fi
+   cp "aliases" "$aliases_end_path"
+   echo -e "Updating ${fgBlue}aliases${reset}"
+fi
